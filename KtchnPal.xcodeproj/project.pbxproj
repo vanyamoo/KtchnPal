@@ -6,6 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4E13B1342CE6569B005E1673 /* Tagged in Frameworks */ = {isa = PBXBuildFile; productRef = 4E13B1332CE6569B005E1673 /* Tagged */; };
+		4E13B1362CE656CA005E1673 /* TaggedMoney in Frameworks */ = {isa = PBXBuildFile; productRef = 4E13B1352CE656CA005E1673 /* TaggedMoney */; };
+		4E13B1382CE656CA005E1673 /* TaggedTime in Frameworks */ = {isa = PBXBuildFile; productRef = 4E13B1372CE656CA005E1673 /* TaggedTime */; };
+		4E13B13B2CE660BA005E1673 /* IdentifiedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 4E13B13A2CE660BA005E1673 /* IdentifiedCollections */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		4E13B10F2CE64410005E1673 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +59,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E13B1342CE6569B005E1673 /* Tagged in Frameworks */,
+				4E13B13B2CE660BA005E1673 /* IdentifiedCollections in Frameworks */,
+				4E13B1362CE656CA005E1673 /* TaggedMoney in Frameworks */,
+				4E13B1382CE656CA005E1673 /* TaggedTime in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +89,7 @@
 				4E13B1002CE6440E005E1673 /* KtchnPal */,
 				4E13B1112CE64410005E1673 /* KtchnPalTests */,
 				4E13B11B2CE64410005E1673 /* KtchnPalUITests */,
+				4E13B1322CE6569B005E1673 /* Frameworks */,
 				4E13B0FF2CE6440E005E1673 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +102,13 @@
 				4E13B1182CE64410005E1673 /* KtchnPalUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		4E13B1322CE6569B005E1673 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +131,10 @@
 			);
 			name = KtchnPal;
 			packageProductDependencies = (
+				4E13B1332CE6569B005E1673 /* Tagged */,
+				4E13B1352CE656CA005E1673 /* TaggedMoney */,
+				4E13B1372CE656CA005E1673 /* TaggedTime */,
+				4E13B13A2CE660BA005E1673 /* IdentifiedCollections */,
 			);
 			productName = KtchnPal;
 			productReference = 4E13B0FE2CE6440E005E1673 /* KtchnPal.app */;
@@ -195,6 +218,10 @@
 			);
 			mainGroup = 4E13B0F52CE6440E005E1673;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4E13B1312CE6566D005E1673 /* XCRemoteSwiftPackageReference "swift-tagged" */,
+				4E13B1392CE660A9005E1673 /* XCRemoteSwiftPackageReference "swift-identified-collections" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4E13B0FF2CE6440E005E1673 /* Products */;
 			projectDirPath = "";
@@ -558,6 +585,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4E13B1312CE6566D005E1673 /* XCRemoteSwiftPackageReference "swift-tagged" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-tagged";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.0;
+			};
+		};
+		4E13B1392CE660A9005E1673 /* XCRemoteSwiftPackageReference "swift-identified-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-identified-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4E13B1332CE6569B005E1673 /* Tagged */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E13B1312CE6566D005E1673 /* XCRemoteSwiftPackageReference "swift-tagged" */;
+			productName = Tagged;
+		};
+		4E13B1352CE656CA005E1673 /* TaggedMoney */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E13B1312CE6566D005E1673 /* XCRemoteSwiftPackageReference "swift-tagged" */;
+			productName = TaggedMoney;
+		};
+		4E13B1372CE656CA005E1673 /* TaggedTime */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E13B1312CE6566D005E1673 /* XCRemoteSwiftPackageReference "swift-tagged" */;
+			productName = TaggedTime;
+		};
+		4E13B13A2CE660BA005E1673 /* IdentifiedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E13B1392CE660A9005E1673 /* XCRemoteSwiftPackageReference "swift-identified-collections" */;
+			productName = IdentifiedCollections;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4E13B0F62CE6440E005E1673 /* Project object */;
 }
