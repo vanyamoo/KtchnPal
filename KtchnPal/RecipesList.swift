@@ -21,9 +21,19 @@ struct RecipesList: View {
     let model: RecipesListModel
     
     var body: some View {
-        List(model.recipes) { recipe in
-            RecipeCardView(recipe: recipe)
+        NavigationStack {
+            List(model.recipes) { recipe in
+                RecipeCardView(recipe: recipe)
+            }
         }
+        .toolbar {
+            Button {
+                //model.addRecipeButtonTapped()
+            } label: {
+                Image(systemName: "plus")
+            }
+        }
+        .navigationTitle("Recipes")
     }
 }
 
@@ -45,11 +55,10 @@ struct RecipeCardView: View {
             .font(.callout)
             .foregroundStyle(.secondary)
         }
-        //.padding(.vertical)
     }
     
     private var time: some View {
-        HStack {
+        HStack(spacing: 4) {
             Image(systemName: "clock")
                 .foregroundColor(.secondary)
             
@@ -60,11 +69,13 @@ struct RecipeCardView: View {
 }
 
 #Preview {
-    RecipesList(
-        model: RecipesListModel(
-            recipes: [
-                .chickenCurryMock,
-                .auberginesAndMozzarellaMock
-            ])
-    )
+    NavigationStack {
+        RecipesList(
+            model: RecipesListModel(
+                recipes: [
+                    .chickenCurryMock,
+                    .auberginesAndMozzarellaMock
+                ])
+        )
+    }
 }
