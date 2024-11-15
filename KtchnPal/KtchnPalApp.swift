@@ -11,7 +11,13 @@ import SwiftUI
 struct KtchnPalApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RecipesList(
+                model: RecipesListModel(
+                    recipes: [
+                        .chickenCurryMock,
+                        .auberginesAndMozzarellaMock
+                    ])
+            )
         }
     }
 }

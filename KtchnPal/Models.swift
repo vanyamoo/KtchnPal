@@ -10,27 +10,28 @@ import Foundation
 import Tagged
 
 struct Recipe: Identifiable, Codable, Equatable {
-    var course: Course
+    var course: Course?
     var cuisine: Cuisine? // theme?
-    var introduction: String
+    var introduction: String = ""
     let id: Tagged<Self, UUID>
     var images: [String]?
-    var ingredients: IdentifiedArrayOf<Ingredient>
-    var instructions: [String] // method?
+    var ingredients: IdentifiedArrayOf<Ingredient> = []
+    var instructions: [String] = [] // method?
     var isFavorite: Bool = false
     var servings: Int?
-    var source: String
+    var source: String = ""
     var thumbnail: String?
-    var time: Duration // prepTime, cookTime, marinateTime? totalTime
-    var title: String
+    //var time: Duration = .zero // prepTime, cookTime, marinateTime? totalTime
+    var totalTime = ""
+    var title: String = ""
 }
 
 enum Course: String, Codable, CaseIterable {
     case all, breakfast, dessert, dinner, lunch, salad, sideDish, snack
 }
 
-enum Cuisine: String, Codable, CaseIterable {
-    case all, indian, thai
+enum Cuisine: String, Codable, CaseIterable {  // Theme?
+    case all, indian, thai, spring, summer, autumn, winter
 }
 
 struct Ingredient: Codable, Equatable, Identifiable {
@@ -67,11 +68,11 @@ extension Recipe {
             "Serve with fresh cilantro and basmati rice."
         ],
         source: "Vikalinka",
-        time: Duration.seconds(6 * 40),
+        totalTime: "1h15min", // Duration.seconds(60 * 50),
         title: "Butter Chicken Curry"
     )
     
-    static let AuberginesAndMozzarellaMock = Self(
+    static let auberginesAndMozzarellaMock = Self(
         course: .dinner,
         introduction: "In this recipe the roasted aubergines are marinated post­ cooking in a dressing packed with lemon and chilli. A generous topping of marinated mozzarella adds both flavour and texture, making this the perfect addition to a vegetarian sharing feast. For a balanced meal, serve with a side of bulgur wheat.",
         id: Recipe.ID(UUID()),
@@ -88,7 +89,7 @@ extension Recipe {
             "Note: Take the mozzarella out of the fridge 30 minutes before using and drain in a sieve."
         ],
         source: "The Roasting Tin",
-        time: Duration.seconds(6 * 40),
+        totalTime: "50min", // Duration.seconds(60 * 40),
         title: "Roasted Aubergines with Mozzarella, Chilli, Lemon and Flat-leaf Parsley"
     )
 }
