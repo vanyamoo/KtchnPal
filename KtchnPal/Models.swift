@@ -18,12 +18,31 @@ struct Recipe: Identifiable, Codable, Equatable {
     var ingredients: IdentifiedArrayOf<Ingredient> = []
     var instructions: [String] = [] // method?
     var isFavorite: Bool = false
+    //var pastCookingSessions: IdentifiedArrayOf<CookingSession> = []
     var servings: Int?
     var source: String = ""
     var thumbnail: String?
     var time: Duration = .zero // prepTime, cookTime, marinateTime? totalTime  duration.formatted(.units())
     var totalTime = ""
     var title: String = ""
+    
+//    init(course: Course? = nil, cuisine: Cuisine? = nil, introduction: String, id: Tagged<Self, UUID>, images: [String]? = nil, ingredients: IdentifiedArrayOf<Ingredient>, instructions: IdentifiedArrayOf<Step>, isFavorite: Bool, servings: Int? = nil, source: String, thumbnail: String? = nil, time: Duration, totalTime: String = "", title: String) {
+//        self.course = course
+//        self.cuisine = cuisine
+//        self.introduction = introduction
+//        self.id = id
+//        self.images = images
+//        self.ingredients = ingredients
+//        self.instructions = instructions
+//        self.isFavorite = isFavorite
+//        self.servings = servings
+//        self.source = source
+//        self.thumbnail = thumbnail
+//        self.time = time
+//        self.totalTime = totalTime
+//        self.title = title
+//        
+//    }
 }
 
 enum Course: String, Codable, CaseIterable {
@@ -42,15 +61,6 @@ struct Ingredient: Codable, Equatable, Identifiable {
     var units: String?
     
     var description: String {
-        //let additionalInfo = self.additionalInfo ?? ""
-//        func formatAdditionalInfo(_ info: String?) -> String {
-//            if var info = self.additionalInfo {
-//                return ", " + info
-//            } else {
-//                return ""
-//            }
-//        }
-        
         let additionalInfo = self.additionalInfo != nil ? ", " + self.additionalInfo! : ""
         let quantity = self.quantity ?? ""
         let units = self.units ?? ""
@@ -59,11 +69,17 @@ struct Ingredient: Codable, Equatable, Identifiable {
     }
 }
 
-struct cookingSession: Codable, Equatable, Identifiable {
-    let id: Tagged<Self, UUID>
-    var date: Date
-    var notes: String
-}
+//struct CookingSession: Codable, Equatable, Identifiable {
+//    let id: Tagged<Self, UUID>
+//    var date: Date
+//    var notes: String
+//}
+
+//struct Step: Codable, Equatable, Identifiable {
+//    let id: Tagged<Self, UUID>
+//    var description: String
+//    var number: String?
+//}
 
 extension Recipe {
     static let chickenCurryMock = Self(
@@ -78,11 +94,11 @@ extension Recipe {
             Ingredient(id: Ingredient.ID(UUID()), name: "medium onion", additionalInfo: "chopped", quantity: "1")
         ],
         instructions: [
-            "In a medium bowl mix the yogurt with the tandoori masala spice mix and add cubed chicken breasts. Marinade for at least 3 hours or overnight.",
-            "In a deep pan heat the ghee or oil and fry the chopped onion, garlic and ginger together over low heat for 10 minutes.",
-            "Add the chicken with the marinade to the pan, add the coriander and turmeric, tomato paste and water, stir to combine, then turn the heat up to medium and bring to a boil, then lower the heat and simmer for 20 minutes covered.",
-            "Add the double cream, stir and cook uncovered for 10 minutes longer until the sauce is thick and desired consistency. Add salt if needed. (There is salt in the tandoori masala spice mix, so only add extra salt if necessary.)",
-            "Serve with fresh cilantro and basmati rice."
+            "1. In a medium bowl mix the yogurt with the tandoori masala spice mix and add cubed chicken breasts. Marinade for at least 3 hours or overnight.",
+            "2. In a deep pan heat the ghee or oil and fry the chopped onion, garlic and ginger together over low heat for 10 minutes.",
+            "3. Add the chicken with the marinade to the pan, add the coriander and turmeric, tomato paste and water, stir to combine, then turn the heat up to medium and bring to a boil, then lower the heat and simmer for 20 minutes covered.",
+            "4. Add the double cream, stir and cook uncovered for 10 minutes longer until the sauce is thick and desired consistency. Add salt if needed. (There is salt in the tandoori masala spice mix, so only add extra salt if necessary.)",
+            "5. Serve with fresh cilantro and basmati rice."
         ],
         source: "Vikalinka",
         time: Duration.seconds(60 * 70),

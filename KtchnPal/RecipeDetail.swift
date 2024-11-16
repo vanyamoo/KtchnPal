@@ -25,6 +25,8 @@ struct RecipeDetailView: View {
             
             ingredients
             
+            method
+            
             //pastCookingSessions
             
             delete
@@ -77,6 +79,41 @@ struct RecipeDetailView: View {
             }
         } header: {
             Text("Ingredients")
+        }
+    }
+    
+//    @ViewBuilder
+//    private var pastCookingSessions: some View {
+//        if !model.recipe.pastCookingSessions.isEmpty {
+//            Section {
+//                ForEach(model.recipe.pastCookingSessions) { session in
+//                    Button {
+//                        //model.sessionTapped(session)
+//                    } label: {
+//                        HStack {
+//                            Image(systemName: "calendar")
+//                            Text(session.date, style: .date)
+//                            Text(session.date, style: .time)
+//                        }
+//                    }
+//                }
+//                .onDelete { indices in
+//                    //model.deleteSessions(atOffsets: indices)
+//                }
+//            } header: {
+//                Text("Notes from past cooking sessions")
+//            }
+//        }
+//    }
+    
+    private var method: some View {
+        Section {
+            ForEach(model.recipe.instructions, id: \.self) { step in
+                Text(step)
+                
+            }
+        } header: {
+            Text("Method")
         }
     }
     
