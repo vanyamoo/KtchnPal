@@ -6,18 +6,26 @@
 //
 
 import SwiftUI
+import SwiftUINavigation
 
 @Observable
 class RecipeDetailModel {
+    var destination: Destination?
     var recipe: Recipe
     
-    init(recipe: Recipe) {
+    @CasePathable
+    enum Destination {
+        case edit(RecipeFormModel)
+    }
+    
+    init(destination: Destination? = nil, recipe: Recipe) {
+        self.destination = destination
         self.recipe = recipe
     }
 }
 
 struct RecipeDetailView: View {
-    let model: RecipeDetailModel
+    @Bindable var model: RecipeDetailModel
     
     var body: some View {
         List {

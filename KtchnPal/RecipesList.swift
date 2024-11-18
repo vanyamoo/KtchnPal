@@ -7,33 +7,63 @@
 
 import IdentifiedCollections
 import SwiftUI
+import SwiftUINavigation
 
 @Observable
 class RecipesListModel {
+    var destination: Destination?
     var recipes: IdentifiedArrayOf<Recipe>
     
-    init(recipes: IdentifiedArrayOf<Recipe>) {
+    @CasePathable
+    enum Destination {
+        case add(RecipeFormModel)
+        case detail(RecipeDetailModel)
+    }
+    
+    init(destination: Destination? = nil, recipes: IdentifiedArrayOf<Recipe>) {
+        self.destination = destination
         self.recipes = recipes
+    }
+    
+    func addRecipeButtonTapped() {
+        destination = .add(RecipeFormModel(recipe: Recipe(id: Recipe.ID(UUID()))))
+    }
+    
+    
+    func recipeTapped(recipe: Recipe) {
+        destination = .detail(RecipeDetailModel(recipe: recipe))
     }
 }
 
 struct RecipesList: View {
-    let model: RecipesListModel
+    @Bindable var model: RecipesListModel
     
     var body: some View {
         NavigationStack {
             List(model.recipes) { recipe in
-                RecipeCardView(recipe: recipe)
+                Button {
+                    model.recipeTapped(recipe: recipe)
+                } label: {
+                    RecipeCardView(recipe: recipe)
+                }
+                //.listRowBackground(syncup.theme.mainColor)
+                
+            }
+            .navigationTitle("Recipes")
+            .toolbar {
+                Button {
+                    //model.addRecipeButtonTapped()
+                } label: {
+                    Image(systemName: "plus")
+                }
+            }
+            .navigationDestination(item: $model.destination.detail) { $detailModel in
+                RecipeDetailView(model: detailModel)
             }
         }
-        .toolbar {
-            Button {
-                //model.addRecipeButtonTapped()
-            } label: {
-                Image(systemName: "plus")
-            }
-        }
-        .navigationTitle("Recipes")
+        
+        
+        
     }
 }
 
@@ -44,6 +74,7 @@ struct RecipeCardView: View {
         VStack(alignment: .leading, spacing: 8) {
             //Text("\(recipe.title)\n") // makes it span two lines
             Text(recipe.title)
+                .foregroundStyle(.black)
                 .font(.headline)
                 .lineLimit(2)
             
@@ -53,7 +84,8 @@ struct RecipeCardView: View {
                 time
             }
             .font(.callout)
-            .foregroundStyle(.secondary)
+            //.foregroundStyle(.secondary)
+            .foregroundStyle(.gray)
         }
     }
     
