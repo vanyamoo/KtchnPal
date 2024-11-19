@@ -62,13 +62,12 @@ struct RecipeDetailView: View {
                 Spacer()
                 Text(model.recipe.source)
             }
-            if model.recipe.course != nil {
-                HStack {
-                    Label("Course", systemImage: "fork.knife")
-                    Spacer()
-                    Text(model.recipe.course!.rawValue.capitalized)
-                }
+            HStack {
+                Label("Course", systemImage: "fork.knife")
+                Spacer()
+                Text(model.recipe.course.rawValue.capitalized)
             }
+            
             HStack {
                 Label("Total time", systemImage: "clock")
                 Spacer()

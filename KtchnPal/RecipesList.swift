@@ -29,6 +29,13 @@ class RecipesListModel {
         destination = .add(RecipeFormModel(recipe: Recipe(id: Recipe.ID(UUID()))))
     }
     
+    func confirmAddRecipeButtonTapped() {
+        
+    }
+    
+    func dismissAddRecipeButtonTapped() {
+        
+    }
     
     func recipeTapped(recipe: Recipe) {
         destination = .detail(RecipeDetailModel(recipe: recipe))
@@ -52,13 +59,31 @@ struct RecipesList: View {
             .navigationTitle("Recipes")
             .toolbar {
                 Button {
-                    //model.addRecipeButtonTapped()
+                    model.addRecipeButtonTapped()
                 } label: {
                     Image(systemName: "plus")
                 }
             }
             .navigationDestination(item: $model.destination.detail) { $detailModel in
                 RecipeDetailView(model: detailModel)
+            }
+            .sheet(item: $model.destination.add) { model in
+                NavigationStack {
+                    RecipeFormView(model: model)
+                        .navigationTitle("New Recipe")
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("Dismiss") {
+                                    //model.dismissAddRecipeButtonTapped()
+                                }
+                            }
+                            ToolbarItem(placement: .confirmationAction) {
+                                Button("Add") {
+                                    //model.confirmAddRecipeButtonTapped()
+                                }
+                            }
+                        }
+                }
             }
         }
         

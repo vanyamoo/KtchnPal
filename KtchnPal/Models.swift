@@ -10,7 +10,7 @@ import Foundation
 import Tagged
 
 struct Recipe: Identifiable, Codable, Equatable {
-    var course: Course?
+    var course: Course = .all
     var cuisine: Cuisine? // theme?
     var introduction: String = ""
     let id: Tagged<Self, UUID>
@@ -22,11 +22,11 @@ struct Recipe: Identifiable, Codable, Equatable {
     var servings: Int?
     var source: String = ""
     var thumbnail: String?
-    var time: Duration = .zero // prepTime, cookTime, marinateTime? totalTime  duration.formatted(.units())
+    var time: Duration = Duration.seconds(60 * 5) // prepTime, cookTime, marinateTime? totalTime  duration.formatted(.units())
     var totalTime = ""
     var title: String = ""
     
-//    init(course: Course? = nil, cuisine: Cuisine? = nil, introduction: String, id: Tagged<Self, UUID>, images: [String]? = nil, ingredients: IdentifiedArrayOf<Ingredient>, instructions: IdentifiedArrayOf<Step>, isFavorite: Bool, servings: Int? = nil, source: String, thumbnail: String? = nil, time: Duration, totalTime: String = "", title: String) {
+//    init(course: Course = .main, cuisine: Cuisine? = nil, introduction: String, id: Tagged<Self, UUID>, images: [String]? = nil, ingredients: IdentifiedArrayOf<Ingredient>, instructions: IdentifiedArrayOf<Step>, isFavorite: Bool, servings: Int? = nil, source: String, thumbnail: String? = nil, time: Duration, totalTime: String = "", title: String) {
 //        self.course = course
 //        self.cuisine = cuisine
 //        self.introduction = introduction
@@ -45,8 +45,16 @@ struct Recipe: Identifiable, Codable, Equatable {
 //    }
 }
 
-enum Course: String, Codable, CaseIterable {
+enum Course: String, Codable, CaseIterable, Identifiable {
     case all, breakfast, dessert, dinner, lunch, main, salad, sideDish, snack
+    
+    var id: Self {
+        self
+    }
+    
+    var name: String {
+        rawValue.capitalized
+    }
 }
 
 enum Cuisine: String, Codable, CaseIterable {  // Theme?
