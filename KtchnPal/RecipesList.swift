@@ -34,7 +34,7 @@ class RecipesListModel {
     }
     
     func dismissAddRecipeButtonTapped() {
-        
+        destination = nil
     }
     
     func recipeTapped(recipe: Recipe) {
@@ -67,19 +67,19 @@ struct RecipesList: View {
             .navigationDestination(item: $model.destination.detail) { $detailModel in
                 RecipeDetailView(model: detailModel)
             }
-            .sheet(item: $model.destination.add) { model in
+            .sheet(item: $model.destination.add) { addModel in
                 NavigationStack {
-                    RecipeFormView(model: model)
+                    RecipeFormView(model: addModel)
                         .navigationTitle("New Recipe")
                         .toolbar {
                             ToolbarItem(placement: .cancellationAction) {
                                 Button("Dismiss") {
-                                    //model.dismissAddRecipeButtonTapped()
+                                    model.dismissAddRecipeButtonTapped()
                                 }
                             }
                             ToolbarItem(placement: .confirmationAction) {
                                 Button("Add") {
-                                    //model.confirmAddRecipeButtonTapped()
+                                    model.confirmAddRecipeButtonTapped()
                                 }
                             }
                         }
@@ -119,7 +119,7 @@ struct RecipeCardView: View {
             Image(systemName: "clock")
                 .foregroundColor(.secondary)
             
-            Text(recipe.totalTime)
+            Text(recipe.time.formatted(.units()))
         }
         .font(.caption)
     }

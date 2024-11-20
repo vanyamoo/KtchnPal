@@ -81,7 +81,7 @@ struct RecipeDetailView: View {
     private var ingredients: some View {
         Section {
             ForEach(model.recipe.ingredients) { ingredient in
-                Text(ingredient.description)
+                Text(ingredient.nameFormatted)
                 
             }
         } header: {
@@ -115,8 +115,8 @@ struct RecipeDetailView: View {
     
     private var method: some View {
         Section {
-            ForEach(model.recipe.instructions, id: \.self) { step in
-                Text(step)
+            ForEach(model.recipe.instructions) { instruction in
+                Text(instruction.text)
                 
             }
         } header: {

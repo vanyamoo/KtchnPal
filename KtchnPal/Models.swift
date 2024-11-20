@@ -16,14 +16,14 @@ struct Recipe: Identifiable, Codable, Equatable {
     let id: Tagged<Self, UUID>
     var images: [String]?
     var ingredients: IdentifiedArrayOf<Ingredient> = []
-    var instructions: [String] = [] // method?
+    var instructions: IdentifiedArrayOf<Instruction> = [] // method?
     var isFavorite: Bool = false
     //var pastCookingSessions: IdentifiedArrayOf<CookingSession> = []
     var servings: Int?
     var source: String = ""
     var thumbnail: String?
     var time: Duration = Duration.seconds(60 * 5) // prepTime, cookTime, marinateTime? totalTime  duration.formatted(.units())
-    var totalTime = ""
+    //var totalTime = ""
     var title: String = ""
     
 //    init(course: Course = .main, cuisine: Cuisine? = nil, introduction: String, id: Tagged<Self, UUID>, images: [String]? = nil, ingredients: IdentifiedArrayOf<Ingredient>, instructions: IdentifiedArrayOf<Step>, isFavorite: Bool, servings: Int? = nil, source: String, thumbnail: String? = nil, time: Duration, totalTime: String = "", title: String) {
@@ -68,13 +68,18 @@ struct Ingredient: Codable, Equatable, Identifiable {
     var quantity: String?
     var units: String?
     
-    var description: String {
+    var nameFormatted: String {
         let additionalInfo = self.additionalInfo != nil ? ", " + self.additionalInfo! : ""
         let quantity = self.quantity ?? ""
         let units = self.units ?? ""
         
         return quantity + units + " " + name + additionalInfo
     }
+}
+
+struct Instruction: Codable, Equatable, Identifiable {
+    let id: Tagged<Self, UUID>
+    var text: String
 }
 
 //struct CookingSession: Codable, Equatable, Identifiable {
@@ -102,15 +107,15 @@ extension Recipe {
             Ingredient(id: Ingredient.ID(UUID()), name: "medium onion", additionalInfo: "chopped", quantity: "1")
         ],
         instructions: [
-            "1. In a medium bowl mix the yogurt with the tandoori masala spice mix and add cubed chicken breasts. Marinade for at least 3 hours or overnight.",
-            "2. In a deep pan heat the ghee or oil and fry the chopped onion, garlic and ginger together over low heat for 10 minutes.",
-            "3. Add the chicken with the marinade to the pan, add the coriander and turmeric, tomato paste and water, stir to combine, then turn the heat up to medium and bring to a boil, then lower the heat and simmer for 20 minutes covered.",
-            "4. Add the double cream, stir and cook uncovered for 10 minutes longer until the sauce is thick and desired consistency. Add salt if needed. (There is salt in the tandoori masala spice mix, so only add extra salt if necessary.)",
-            "5. Serve with fresh cilantro and basmati rice."
+            Instruction(id: Instruction.ID(UUID()), text: "1. In a medium bowl mix the yogurt with the tandoori masala spice mix and add cubed chicken breasts. Marinade for at least 3 hours or overnight."),
+            Instruction(id: Instruction.ID(UUID()), text: "2. In a deep pan heat the ghee or oil and fry the chopped onion, garlic and ginger together over low heat for 10 minutes."),
+            Instruction(id: Instruction.ID(UUID()), text: "3. Add the chicken with the marinade to the pan, add the coriander and turmeric, tomato paste and water, stir to combine, then turn the heat up to medium and bring to a boil, then lower the heat and simmer for 20 minutes covered."),
+            Instruction(id: Instruction.ID(UUID()), text: "4. Add the double cream, stir and cook uncovered for 10 minutes longer until the sauce is thick and desired consistency. Add salt if needed. (There is salt in the tandoori masala spice mix, so only add extra salt if necessary.)"),
+            Instruction(id: Instruction.ID(UUID()), text: "5. Serve with fresh cilantro and basmati rice.")
         ],
         source: "Vikalinka",
         time: Duration.seconds(60 * 70),
-        totalTime: "1h15min",
+        //totalTime: "1h15min",
         title: "Butter Chicken Curry"
     )
     
@@ -125,14 +130,14 @@ extension Recipe {
             Ingredient(id: Ingredient.ID(UUID()), name: "lemons", additionalInfo: "zest and juice", quantity: "2")
         ],
         instructions: [
-            "1. Preheat the oven to 180°C fan/200°C/ gas 6. Cut the tops off the aubergines and slice them lengthways in half, then cut each half lengthways into long quarters. Place the slices in a large roasting tin in a single layer, add a generous scattering of sea salt and drizzle with the olive oil. Mix well with your hands to evenly coat the slices in the oil and salt, then pop into the oven and roast for 40 minutes.",
-            "2. Meanwhile, whisk together the extra virgin olive oil, lemon zest and juice, flat­ leaf parsley and chilli. Season to taste with sea salt, then tip a few tablespoons of the dressing over the torn mozzarella while the aubergines are cooking.",
-            "3. As soon as the aubergines are cooked, tip the remaining dressing over them and turn them over gently until thoroughly coated. Allow them to sit in the dressing for 5 minutes, then tip over the marinated mozzarella and serve warm.",
-            "Note: Take the mozzarella out of the fridge 30 minutes before using and drain in a sieve."
+            Instruction(id: Instruction.ID(UUID()), text:"1. Preheat the oven to 180°C fan/200°C/ gas 6. Cut the tops off the aubergines and slice them lengthways in half, then cut each half lengthways into long quarters. Place the slices in a large roasting tin in a single layer, add a generous scattering of sea salt and drizzle with the olive oil. Mix well with your hands to evenly coat the slices in the oil and salt, then pop into the oven and roast for 40 minutes."),
+            Instruction(id: Instruction.ID(UUID()), text:"2. Meanwhile, whisk together the extra virgin olive oil, lemon zest and juice, flat­ leaf parsley and chilli. Season to taste with sea salt, then tip a few tablespoons of the dressing over the torn mozzarella while the aubergines are cooking."),
+            Instruction(id: Instruction.ID(UUID()), text:"3. As soon as the aubergines are cooked, tip the remaining dressing over them and turn them over gently until thoroughly coated. Allow them to sit in the dressing for 5 minutes, then tip over the marinated mozzarella and serve warm."),
+            Instruction(id: Instruction.ID(UUID()), text:"Note: Take the mozzarella out of the fridge 30 minutes before using and drain in a sieve.")
         ],
         source: "The Roasting Tin",
         time: Duration.seconds(60 * 40),
-        totalTime: "50min",
+        //totalTime: "50min",
         title: "Roasted Aubergines with Mozzarella, Chilli, Lemon and Flat-leaf Parsley"
     )
 }
