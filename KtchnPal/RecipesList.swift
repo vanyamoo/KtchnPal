@@ -30,7 +30,24 @@ class RecipesListModel {
     }
     
     func confirmAddRecipeButtonTapped() {
+        defer { destination = nil } // no matter what happened we'll clear the sheet
+        //if let destination {
+        //    switch destination {
+        //    case let .add(recipeFormModel):
+        //        recipes.append(recipeFormModel.recipe)
+        //    }
+        //}
+        guard case let .add(recipeFormModel) = destination else { return }
+        var newRecipe = recipeFormModel.recipe
         
+        // remove ingredients with empty names
+        newRecipe.ingredients.removeAll { ingredient in
+            ingredient.name.allSatisfy(\.isWhitespace)
+        }
+        if newRecipe.ingredients.isEmpty {
+            newRecipe.ingredients.append(Ingredient(id: Ingredient.ID(UUID()), name: ""))
+        }
+        recipes.append(newRecipe)
     }
     
     func dismissAddRecipeButtonTapped() {

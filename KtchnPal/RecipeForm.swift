@@ -54,7 +54,6 @@ class RecipeFormModel: Identifiable {
         recipe.instructions.append(instruction)
         focus = .instruction(instruction.id)
     }
-    
 }
 
 struct RecipeFormView: View {
