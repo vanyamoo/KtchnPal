@@ -40,7 +40,7 @@ struct AppView: View  {
 @Observable
 class RecipesListModel {
     var destination: Destination? {
-        didSet { bind() } // bind to the onConfirmDeletion closure (RecipeDetail) // we are now intergrating a parent and a child features together so they can now communicate with each other
+        didSet { bind() } // bind to the onConfirmDeletion & onRecipeUpdated closure (RecipeDetail) // we are now intergrating a parent and a child features together so they can now communicate with each other
     }
     var recipes: IdentifiedArrayOf<Recipe>
     
@@ -55,7 +55,7 @@ class RecipesListModel {
     init(destination: Destination? = nil, recipes: IdentifiedArrayOf<Recipe>) {
         self.destination = destination
         self.recipes = recipes
-        bind() // bind to the onConfirmDeletion closure (RecipeDetail)
+        bind() // bind to the onConfirmDeletion & onRecipeUpdated closure (RecipeDetail)
     }
     
     func addRecipeButtonTapped() {
@@ -91,7 +91,7 @@ class RecipesListModel {
         destination = .detail(RecipeDetailModel(recipe: recipe))
     }
     
-    // binds to the onConfirmDeletion closure anytime the destination switches to .detail
+    // binds to the onConfirmDeletion & onRecipeUpdated closure anytime the destination switches to .detail
     private func bind() {
         switch destination {
         case let .detail(detailModel):
@@ -99,6 +99,11 @@ class RecipesListModel {
                 guard let self else { return } // we unwrap self, otherwise early out // instead of self?.recipes....
                 self.recipes.remove(id: id) // removeAll(where: { $0.id == detailModel.recipe.id })
                 self.destination = nil
+            }
+            
+            detailModel.onRecipeUpdated = { [weak self] recipe in
+                guard let self else { return }
+                self.recipes[id: recipe.id] = recipe
             }
         case .add, .none:
             break

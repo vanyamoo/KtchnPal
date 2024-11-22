@@ -12,11 +12,11 @@ import SwiftUINavigation
 @Observable
 class RecipeDetailModel {
     var destination: Destination?
-    var recipe: Recipe //{
-//        didSet {
-//            onRecipeUpdated(recipe)
-//        }
-//    }
+    var recipe: Recipe {
+        didSet {
+            onRecipeUpdated(recipe)
+        }
+    }
     var onConfirmDeletion: () -> Void = unimplemented("RecipeDetailModel.onConfirmDeletion")
     var onRecipeUpdated: (Recipe) -> Void = unimplemented("RecipeDetailModel.onRecipeUpdated")
     
