@@ -5,22 +5,59 @@
 //  Created by Vanya Mutafchieva on 15/11/2024.
 //
 
+import IssueReporting
 import SwiftUI
 import SwiftUINavigation
 
 @Observable
 class RecipeDetailModel {
     var destination: Destination?
-    var recipe: Recipe
+    var recipe: Recipe //{
+//        didSet {
+//            onRecipeUpdated(recipe)
+//        }
+//    }
+    var onConfirmDeletion: () -> Void = unimplemented("RecipeDetailModel.onConfirmDeletion")
+    var onRecipeUpdated: (Recipe) -> Void = unimplemented("RecipeDetailModel.onRecipeUpdated")
     
     @CasePathable
     enum Destination {
+        case alert(AlertState<AlertAction>)
         case edit(RecipeFormModel)
+    }
+    
+    enum AlertAction {
+        case confirmDeletion
     }
     
     init(destination: Destination? = nil, recipe: Recipe) {
         self.destination = destination
         self.recipe = recipe
+    }
+    
+    func alertButtonTapped(_ action: AlertAction) {
+        switch action {
+        case .confirmDeletion:
+            onConfirmDeletion()
+        }
+    }
+    
+    func cancelEditButtonTapped() {
+        destination = nil
+    }
+    
+    func deleteButtonTapped() {
+        destination = .alert(.deleteRecipe)
+    }
+    
+    func doneEdittingButtonTapped() {
+        guard case let .edit(editModel) = destination else { return }
+        recipe = editModel.recipe
+        destination = nil
+    }
+    
+    func editButtonTapped() {
+        destination = .edit(RecipeFormModel(recipe: recipe))
     }
 }
 
@@ -42,7 +79,31 @@ struct RecipeDetailView: View {
         .navigationTitle(model.recipe.title)
         .toolbar {
             Button("Edit") {
-                //model.editButtonTapped()
+                model.editButtonTapped()
+            }
+        }
+        .alert($model.destination.alert, action: { action in
+            guard let action else { return }
+            //if let action {
+                model.alertButtonTapped(action)
+            //}
+        })
+        .sheet(item: $model.destination.edit) { $editModel in
+            NavigationStack {
+                RecipeFormView(model: editModel)
+                    .navigationTitle(editModel.recipe.title)
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button("Cancel") {
+                                model.cancelEditButtonTapped()
+                            }
+                        }
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button("Done") {
+                                model.doneEdittingButtonTapped()
+                            }
+                        }
+                    }
             }
         }
     }
@@ -127,7 +188,7 @@ struct RecipeDetailView: View {
     private var delete: some View {
         Section {
             Button("Delete") {
-                //model.deleteButtonTapped()
+                model.deleteButtonTapped()
             }
             .foregroundColor(.red)
             .frame(maxWidth: .infinity)
@@ -135,6 +196,21 @@ struct RecipeDetailView: View {
     }
     
 
+}
+
+extension AlertState where Action == RecipeDetailModel.AlertAction {
+    static let deleteRecipe = Self {
+        TextState("Delete?")
+    } actions: {
+        ButtonState(role: .destructive, action: .confirmDeletion) {
+            TextState("Yes")
+        }
+        ButtonState(role: .cancel) {
+            TextState("Nevermind")
+        }
+    } message: {
+        TextState("Are you sure you want to delete this recipe?")
+    }
 }
 
 #Preview {

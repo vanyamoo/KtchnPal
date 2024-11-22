@@ -6,13 +6,45 @@
 //
 
 import IdentifiedCollections
+import IssueReporting
 import SwiftUI
 import SwiftUINavigation
 
 @Observable
+class AppModel {
+    var recipesListModel: RecipesListModel {
+        didSet { bind() }
+    }
+    
+    init(recipesListModel: RecipesListModel) {
+        self.recipesListModel = recipesListModel
+        bind()
+    }
+    private func bind() {
+        recipesListModel.onRecipeTapped = { [weak self] recipe in
+            guard let self else { return }
+            self.recipesListModel.destination = .detail(RecipeDetailModel(recipe: recipe))
+        }
+    }
+}
+struct AppView: View  {
+    @State var model: AppModel
+    var body: some View {
+        RecipesList(
+            model: model.recipesListModel
+        )
+    }
+}
+
+
+@Observable
 class RecipesListModel {
-    var destination: Destination?
+    var destination: Destination? {
+        didSet { bind() } // bind to the onConfirmDeletion closure (RecipeDetail) // we are now intergrating a parent and a child features together so they can now communicate with each other
+    }
     var recipes: IdentifiedArrayOf<Recipe>
+    
+    var onRecipeTapped: (Recipe) -> Void = unimplemented("RecipesListModel.onRecipeTapped")
     
     @CasePathable
     enum Destination {
@@ -23,6 +55,7 @@ class RecipesListModel {
     init(destination: Destination? = nil, recipes: IdentifiedArrayOf<Recipe>) {
         self.destination = destination
         self.recipes = recipes
+        bind() // bind to the onConfirmDeletion closure (RecipeDetail)
     }
     
     func addRecipeButtonTapped() {
@@ -56,6 +89,20 @@ class RecipesListModel {
     
     func recipeTapped(recipe: Recipe) {
         destination = .detail(RecipeDetailModel(recipe: recipe))
+    }
+    
+    // binds to the onConfirmDeletion closure anytime the destination switches to .detail
+    private func bind() {
+        switch destination {
+        case let .detail(detailModel):
+            detailModel.onConfirmDeletion = { [weak self, id = detailModel.recipe.id] in // to avoid a retain cycle we capture self weakly, and also capture the id of the recipe
+                guard let self else { return } // we unwrap self, otherwise early out // instead of self?.recipes....
+                self.recipes.remove(id: id) // removeAll(where: { $0.id == detailModel.recipe.id })
+                self.destination = nil
+            }
+        case .add, .none:
+            break
+        }
     }
 }
 

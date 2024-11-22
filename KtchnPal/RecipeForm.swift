@@ -102,8 +102,8 @@ struct RecipeFormView: View {
     private var ingredients: some View {
         Section {
             ForEach($model.recipe.ingredients) { $ingredient in
-                TextField(Constants.Ingredients.example[model.recipe.ingredients.count - 1].nameFormatted, text: $ingredient.name)
-                //TextField("450g chicken breasts, diced", text: $ingredient.name)
+                //TextField(Constants.Ingredients.example[(model.recipe.ingredients.count - 1)%].nameFormatted, text: $ingredient.name)
+                TextField("e.g. 450g chicken breasts, diced", text: $ingredient.name)
                     .focused($focus, equals: .ingredient(ingredient.id))
             }
             .onDelete { indices in

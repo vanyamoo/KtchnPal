@@ -9,15 +9,27 @@ import SwiftUI
 
 @main
 struct KtchnPalApp: App {
+    static let model = AppModel(recipesListModel: RecipesListModel(
+                            recipes: [
+                                .chickenCurryMock,
+                                .auberginesAndMozzarellaMock
+                            ]))
+  
     var body: some Scene {
         WindowGroup {
-            RecipesList(
-                model: RecipesListModel(
-                    recipes: [
-                        .chickenCurryMock,
-                        .auberginesAndMozzarellaMock
-                    ])
-            )
+            AppView(model: Self.model)
         }
     }
+
+//    var body: some Scene {
+//        WindowGroup {
+//            RecipesList(
+//                model: RecipesListModel(
+//                    recipes: [
+//                        .chickenCurryMock,
+//                        .auberginesAndMozzarellaMock
+//                    ])
+//            )
+//        }
+//    }
 }
