@@ -26,23 +26,6 @@ struct Recipe: Identifiable, Codable, Equatable {
     //var totalTime = ""
     var title: String = ""
     
-//    init(course: Course = .main, cuisine: Cuisine? = nil, introduction: String, id: Tagged<Self, UUID>, images: [String]? = nil, ingredients: IdentifiedArrayOf<Ingredient>, instructions: IdentifiedArrayOf<Step>, isFavorite: Bool, servings: Int? = nil, source: String, thumbnail: String? = nil, time: Duration, totalTime: String = "", title: String) {
-//        self.course = course
-//        self.cuisine = cuisine
-//        self.introduction = introduction
-//        self.id = id
-//        self.images = images
-//        self.ingredients = ingredients
-//        self.instructions = instructions
-//        self.isFavorite = isFavorite
-//        self.servings = servings
-//        self.source = source
-//        self.thumbnail = thumbnail
-//        self.time = time
-//        self.totalTime = totalTime
-//        self.title = title
-//        
-//    }
 }
 
 enum Course: String, Codable, CaseIterable, Identifiable {
