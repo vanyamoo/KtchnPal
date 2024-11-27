@@ -112,7 +112,7 @@ class RecipesListModel {
 }
 
 struct RecipesList: View {
-    @Bindable var model: RecipesListModel
+    @Bindable var model: RecipesListViewModel // RecipesListModel
     
     var body: some View {
         NavigationStack {
@@ -197,7 +197,7 @@ struct RecipeCardView: View {
 #Preview {
     NavigationStack {
         RecipesList(
-            model: RecipesListModel(
+            model: RecipesListViewModel(
                 recipes: [
                     .chickenCurryMock,
                     .auberginesAndMozzarellaMock

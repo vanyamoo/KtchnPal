@@ -62,7 +62,7 @@ class RecipeDetailModel {
 }
 
 struct RecipeDetailView: View {
-    @Bindable var model: RecipeDetailModel
+    @Bindable var model: RecipeDetailViewModel // RecipeDetailModel
     
     var body: some View {
         List {
@@ -215,7 +215,7 @@ extension AlertState where Action == RecipeDetailModel.AlertAction {
 
 #Preview {
     NavigationStack {
-        RecipeDetailView(model: RecipeDetailModel(recipe: .chickenCurryMock))
+        RecipeDetailView(model: RecipeDetailViewModel(recipe: .chickenCurryMock))
     }
     
 }

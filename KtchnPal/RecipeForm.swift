@@ -57,7 +57,7 @@ class RecipeFormModel: Identifiable {
 }
 
 struct RecipeFormView: View {
-    @Bindable var model: RecipeFormModel
+    @Bindable var model: RecipeFormViewModel // RecipeFormModel
     
     enum Field: Hashable {
         case ingredient(Ingredient.ID)
@@ -180,5 +180,5 @@ extension Duration {
 
 #Preview {
     @Previewable @State var recipe: Recipe = .chickenCurryMock
-    RecipeFormView(model: RecipeFormModel(recipe: recipe))
+    RecipeFormView(model: RecipeFormViewModel(recipe: recipe))
 }

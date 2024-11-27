@@ -1,5 +1,5 @@
 //
-//  RecipeListViewModel.swift
+//  RecipesListViewModel.swift
 //  KtchnPal
 //
 //  Created by Vanya Mutafchieva on 26/11/2024.
@@ -11,7 +11,7 @@ import SwiftUINavigation
 
 
 @Observable
-class RecipeListViewModel {
+class RecipesListViewModel {
     var destination: Destination?
     
     @CasePathable

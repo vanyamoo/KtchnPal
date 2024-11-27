@@ -38,4 +38,19 @@ class RecipeFormViewModel {
         let index = min(indices.first!, recipe.ingredients.count - 1)
         focus = .ingredient(recipe.ingredients[index].id)
     }
+    
+    func deleteInstructions(atOffsets indices: IndexSet) {
+        recipe.instructions.remove(atOffsets: indices)
+        if recipe.instructions.isEmpty {
+            recipe.instructions.append(Instruction(id: Instruction.ID(UUID()), text: ""))
+        }
+        let index = min(indices.first!, recipe.instructions.count - 1)
+        focus = .instruction(recipe.instructions[index].id)
+    }
+    
+    func nextStepButtonTapped() {
+        let instruction = Instruction(id: Instruction.ID(UUID()), text: "")
+        recipe.instructions.append(instruction)
+        focus = .instruction(instruction.id)
+    }
 }
